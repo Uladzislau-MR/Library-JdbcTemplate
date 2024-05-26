@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show One</title>
+
+
+
+</head>
+
+
+
+<body>
+<p th:text="${book.getName() + ', ' + book.getYear() + ', ' + book.getAuthor() }">VALUE</p>
+<div th:if="${personBook == null}">
+
+    <form th:method="PATCH" th:action="@{/books/{id}/set(id=${book.getId()})}"  >
+        <label for="person"> Choose a reader:</label>
+        <select th:object="${person}" th:field="*{id}" id = "person"        >
+<!--            проходимся по списку people и выбирает объекты person-->
+            <option
+                    th:each="person : ${people}"
+                    th:value="${person.getId()}"
+                    th:text="${person.getFullName()}">Person Name</option>
+        </select>
+
+        <button type="submit">Set Reader</button>
+    </form>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div th:if="${personBook != null}">
+
+    <p th:text="${personBook.getFullName() }">VALUE2</p>
+</div>
+
+
+
+<a th:href=" @{/books/{id}/Edit(id=${book.getId()})}"> Edit person </a>
+
+<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+    <input type="submit" value="Delete"/>
+
+</form>
+
+
+
+
+
+
+    <!-- Форма для освобождения книги -->
+<form th:method="post" th:action="@{/books/{id}/release(id=${book.getId()})}" >
+    <input type="submit" value="Release Book" />
+</form>
+
+
+
+
+
+
+
+</body>
+</html>
